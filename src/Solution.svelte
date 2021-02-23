@@ -14,6 +14,7 @@
     if (e.key === "Enter") {
       e.preventDefault();
       dispatch("save");
+      e.target.blur();
     }
   };
 </script>
