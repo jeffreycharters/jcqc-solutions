@@ -20,7 +20,16 @@
 	};
 
 	const addSolution = () => {
-		solutions.update((n) => [...n, { name: "New Solution" }]);
+		const dateObj = new Date();
+		const yyyy = dateObj.getFullYear();
+		let mm = dateObj.getMonth() + 1;
+		let dd = dateObj.getDate();
+		if (mm < 10) mm = `0${mm}`;
+		if (dd < 10) dd = `0${dd}`;
+		solutions.update((n) => [
+			...n,
+			{ name: "New Solution", prepDate: `${yyyy}-${mm}-${dd}` },
+		]);
 	};
 </script>
 
