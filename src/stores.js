@@ -1,9 +1,7 @@
 import { writable } from "svelte/store";
 
 const initialSolutions = [
-  { name: "ICPMS Rinse", prepDate: "2020-01-01" },
-  { name: "ICPMS Diluent", prepDate: "2020-01-01" },
-  { name: "ICPMS iSTD", prepDate: "2020-01-01" }
+  { name: "Solution Name", prepDate: "YYYY-MM-DD" }
 ];
 
 const savedSolutions = JSON.parse(localStorage.getItem("solutions"));
