@@ -1,5 +1,7 @@
 <script>
+	import Balls from "./Balls.svelte";
 	import Solution from "./Solution.svelte";
+	import AddSolutionButton from "./AddSolutionButton.svelte";
 	import Toast from "./Toast.svelte";
 	import { solutions } from "./stores.js";
 
@@ -33,13 +35,13 @@
 	};
 </script>
 
-<button on:click={addSolution} class="add-btn">Add Solution</button>
+<AddSolutionButton on:click={addSolution} />
+
+<Balls />
 
 {#if showToast}
 	<Toast>Saved!</Toast>
 {/if}
-
-<div class="container" />
 
 <main>
 	<h1>JCQC - Solution Monitor</h1>
@@ -61,16 +63,8 @@
 		font-family: sans-serif;
 		text-align: center;
 		width: 100%;
-	}
-	.container {
-		position: absolute;
-		top: 0;
-		left: 0;
-		background-image: url("/images/icefloe.jpg");
-		filter: hue-rotate(45deg);
-		height: 100%;
-		width: 100%;
-		z-index: -1;
+		padding: 0;
+		margin: 0;
 	}
 	h1 {
 		letter-spacing: 10px;
@@ -81,11 +75,5 @@
 		flex-flow: row wrap;
 		justify-content: center;
 		align-items: center;
-	}
-	.add-btn {
-		position: absolute;
-		margin: 10px;
-		bottom: 20px;
-		right: 20px;
 	}
 </style>

@@ -78,6 +78,7 @@
       black 39%,
       rgba(255, 255, 255, 0.8) 40%
     );
+    opacity: 0.7;
   }
 
   [contenteditable] {
