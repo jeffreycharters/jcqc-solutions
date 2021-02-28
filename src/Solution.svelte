@@ -8,8 +8,8 @@
 
   const dispatch = createEventDispatcher();
 
-  const removeSolution = (name) => {
-    solutions.update((solns) => solns.filter((s) => s.name != name));
+  const removeSolution = (id) => {
+    solutions.update((solns) => solns.filter((s) => s.id != id));
     dispatch("save");
   };
 
@@ -36,7 +36,7 @@
   {#if showX}
     <div
       class="x-button"
-      on:click={() => removeSolution(solution.name)}
+      on:click={() => removeSolution(solution.id)}
       in:fade={{ duration: 200 }}
       out:fade={{ duration: 300 }}
     >
