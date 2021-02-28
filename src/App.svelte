@@ -1,4 +1,5 @@
 <script>
+	import { flip } from "svelte/animate";
 	import Balls from "./Balls.svelte";
 	import Solution from "./Solution.svelte";
 	import AddSolutionButton from "./AddSolutionButton.svelte";
@@ -27,6 +28,10 @@
 	};
 
 	const addSolution = () => {
+		const randomString = Math.random()
+			.toString(36)
+			.replace(/[^a-z]+/g, "")
+			.substr(0, 5);
 		const dateObj = new Date();
 		const yyyy = dateObj.getFullYear();
 		let mm = dateObj.getMonth() + 1;
@@ -35,7 +40,11 @@
 		if (dd < 10) dd = `0${dd}`;
 		solutions.update((n) => [
 			...n,
-			{ name: "New Solution", prepDate: `${yyyy}-${mm}-${dd}` },
+			{
+				name: "New Solution",
+				prepDate: `${yyyy}-${mm}-${dd}`,
+				id: randomString,
+			},
 		]);
 	};
 </script>
@@ -48,10 +57,11 @@
 
 <main>
 	<h1>JCQC - Solution Monitor</h1>
-
 	<div class="solution-parent">
-		{#each solutions_current as solution}
-			<Solution {solution} on:save={saveToLocal} />
+		{#each solutions_current as solution (solution.id)}
+			<div animate:flip={{ duration: 200 }}>
+				<Solution {solution} on:save={saveToLocal} />
+			</div>
 		{/each}
 	</div>
 </main>
