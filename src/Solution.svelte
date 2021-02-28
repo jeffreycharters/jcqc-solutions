@@ -1,7 +1,10 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { fade, fly } from "svelte/transition";
   import { solutions } from "./stores.js";
   export let solution;
+
+  let showX = false;
 
   const dispatch = createEventDispatcher();
 
@@ -17,10 +20,29 @@
       e.target.blur();
     }
   };
+
+  const toggleX = () => {
+    showX = !showX;
+  };
 </script>
 
-<div class="solution-container">
-  <div class="x-button" on:click={() => removeSolution(solution.name)}>❌</div>
+<div
+  class="solution-container"
+  on:mouseenter={toggleX}
+  on:mouseleave={toggleX}
+  in:fly={{ x: 200, duration: 250 }}
+  out:fade={{ duration: 100 }}
+>
+  {#if showX}
+    <div
+      class="x-button"
+      on:click={() => removeSolution(solution.name)}
+      in:fade={{ duration: 200 }}
+      out:fade={{ duration: 300 }}
+    >
+      <img src="/images/recycle.svg" alt="delete" height="15" id="delete-btn" />
+    </div>
+  {/if}
   <div
     class="solution-name"
     contenteditable="true"
@@ -38,13 +60,17 @@
 <style>
   .x-button {
     position: absolute;
-    top: 0;
+    top: 3px;
     right: 3px;
     display: inline;
     max-width: 20px;
     font-size: 0.6em;
-    cursor: default;
+    cursor: pointer;
     margin-top: 2px;
+  }
+
+  #delete-btn {
+    filter: invert(42%) sepia(100) hue-rotate(310deg) saturate(800%);
   }
 
   .solution-name {
@@ -78,7 +104,8 @@
       black 39%,
       rgba(255, 255, 255, 0.8) 40%
     );
-    opacity: 0.7;
+    opacity: 0.8;
+    will-change: contents;
   }
 
   [contenteditable] {

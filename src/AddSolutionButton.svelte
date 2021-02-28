@@ -6,6 +6,5 @@
     margin: 10px;
     bottom: 20px;
     right: 20px;
-    opacity: 0.8;
   }
 </style>

@@ -4,12 +4,17 @@
 	import AddSolutionButton from "./AddSolutionButton.svelte";
 	import Toast from "./Toast.svelte";
 	import { solutions } from "./stores.js";
+	import { onDestroy } from "svelte";
 
 	let solutions_current;
 	let showToast = false;
 
 	const unsubscribe = solutions.subscribe((value) => {
 		solutions_current = value;
+	});
+
+	onDestroy(() => {
+		unsubscribe();
 	});
 
 	const saveToLocal = () => {
@@ -39,9 +44,7 @@
 
 <Balls />
 
-{#if showToast}
-	<Toast>Saved!</Toast>
-{/if}
+<Toast show={showToast}>Saved!</Toast>
 
 <main>
 	<h1>JCQC - Solution Monitor</h1>

@@ -3,8 +3,8 @@
 
   let surface, h, w;
 
-  let numBalls = 8;
-  let maxSize = 200;
+  let numBalls = 12;
+  let maxSize = 100;
   let ballsArray = [];
 
   onMount(() => {
@@ -17,16 +17,27 @@
 
     class Ball {
       constructor() {
-        this.size = Math.random() * maxSize + 5;
+        this.size = Math.random() * maxSize + 2;
         this.x = Math.random() * (w - this.size * 2) + this.size;
         this.y = Math.random() * (h - this.size * 2) + this.size;
-        this.rgb = Math.ceil(255 - maxSize + this.size);
-        this.colour = `rgb(${this.rgb},${this.rgb},${this.rgb})`;
+        this.rgb = Math.ceil(this.size + 55);
+        this.colour = `rgb(${this.rgb - 10},${this.rgb + 30},${this.rgb + 60})`;
       }
     }
 
-    for (let i = 0; i < numBalls; i++) {
-      ballsArray.push(new Ball());
+    while (ballsArray.length <= numBalls) {
+      const newBall = new Ball();
+      let isFarAway = true;
+      for (let i = 0; i < ballsArray.length; i++) {
+        const biggerBallSize =
+          newBall.size > ballsArray[i].size ? newBall.size : ballsArray[i].size;
+        const dx = ballsArray[i].x - newBall.x;
+        const dy = ballsArray[i].y - newBall.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        isFarAway = distance > biggerBallSize;
+        if (!isFarAway) break;
+      }
+      if (isFarAway) ballsArray.push(newBall);
     }
     ballsArray.sort((a, b) => {
       return b.size - a.size;
@@ -38,7 +49,10 @@
 <div bind:this={surface} id="ballsDiv">
   <svg>
     {#each ballsArray as { x, y, size, colour }}
-      <circle cx={x} cy={y} r={size} fill={colour} />
+      <filter id={x} x="0" y="0">
+        <feGaussianBlur in="SourceGraphic" stdDeviation={size / 75} />
+      </filter>
+      <circle cx={x} cy={y} r={size} fill={colour} filter={`url(#${x})`} />
     {/each}
   </svg>
 </div>
