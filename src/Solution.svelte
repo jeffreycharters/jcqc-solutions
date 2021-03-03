@@ -31,7 +31,7 @@
   on:mouseenter={toggleX}
   on:mouseleave={toggleX}
   in:fly={{ x: 200, duration: 250 }}
-  out:fade={{ duration: 100 }}
+  out:fly={{ x: 200, duration: 500 }}
 >
   {#if showX}
     <div
