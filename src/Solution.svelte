@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { fade, fly } from "svelte/transition";
+  import { fade, fly, scale } from "svelte/transition";
   import { solutions } from "./stores.js";
   export let solution;
 
@@ -31,7 +31,7 @@
   on:mouseenter={toggleX}
   on:mouseleave={toggleX}
   in:fly={{ x: 200, duration: 250 }}
-  out:fly={{ x: 200, duration: 500 }}
+  out:scale={{ duration: 200 }}
 >
   {#if showX}
     <div
@@ -43,6 +43,7 @@
       <img src="/images/recycle.svg" alt="delete" height="15" id="delete-btn" />
     </div>
   {/if}
+
   <div
     class="solution-name"
     contenteditable="true"
